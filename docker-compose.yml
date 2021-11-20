@@ -1,0 +1,43 @@
+version: '3.5'
+services:
+  db:
+    # docker run --name postgres_db -e POSTGRES_DB=test -e POSTGRES_USER=123 -e POSTGRES_PASSWORD=123 -e PGDATA=/var/lib/postgresql/data/pgdata  -p 5432:5432 -d postgres:13.3
+    container_name: 'postgres_db'
+    image: postgres:13.3
+    environment:
+      POSTGRES_DB: test
+      POSTGRES_USER: 123
+      POSTGRES_PASSWORD: 123
+      PGDATA: /var/lib/postgresql/data/pgdata
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - target:/var/run/postgresql/
+      - pgdata:/var/lib/postgresql/data/
+
+  web:
+    container_name: 'ec_site'
+    command: python manage.py runserver
+    # command: ./server_run.sh
+    # entrypoint: /web/server_run.sh
+    # build:說明此容器要使用特定 Dockerfile 來 build
+    build:
+      # context為檔案目錄
+      context: ./ec_site
+      # dockerfile為 Dockerfile 的名字。
+      dockerfile: Dockerfile
+
+      # command:
+    restart: always
+    volumes:
+      # - api_data:/web
+      - target:/var/run/postgresql/
+      - /Users/lionl771128/Documents/Django_test/ec_site/web:/web
+    depends_on:
+      - db
+volumes:
+  api_data:
+  pgdata:
+  target:
