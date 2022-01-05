@@ -110,11 +110,11 @@ def add_to_cart_view(request):
     full_catc = request.GET['full_catc']
     pc = request.GET["ec_cart"]
 
-    # 透過shoping cart頁面
+    # 透過shop detail頁面
     if request.method == 'POST':
         quantity = int(request.POST['quantity'])
         redirect_url = f'/shop/details/{full_catc}?pc={pc}'
-    # 透過加入購物車按鈕
+    # 透過購物車圖形按鈕
     elif request.method == 'GET':
         quantity = 1
         redirect_url = f'/index'

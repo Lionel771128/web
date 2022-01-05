@@ -259,7 +259,7 @@
         total_price_obj[0].childNodes[3].childNodes[3].innerHTML='Total <span>$' + t_price + '</span>';
 
     });
-
+    // delete item in shopping cart  (botton X)
     var icon_close = $('.shoping__cart__item__close');
     icon_close.on('click', '.icon_close', function () {
         var button = $(this);
@@ -268,6 +268,7 @@
         console.log(obj);
         obj.remove();
 
+        // after delete the item, calculate all price again
         var all_product_list = $("tr.product__cart");
         var t_price = 0;
         var index = 0;
@@ -284,7 +285,7 @@
         total_price_obj[0].childNodes[3].childNodes[3].innerHTML='Total <span>$' + t_price + '</span>';
     })
 
-
+    // update shopping cart
     var update_cart_btn = $('button#btn_update_cart');
     // console.log('666');
     // console.log(update_cart_btn);
