@@ -80,6 +80,7 @@ def index_view(request):
             'img_path': product.image_path
         }
         param['feature_product'].append(p)
+        print(product.image_path)
     return render(request, 'index.html', param)
 
 

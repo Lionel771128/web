@@ -15,13 +15,14 @@ LABEL maintainer="lionel771128" e-mail='123@123.com'
 # https://stackoverflow.com/questions/59812009/what-is-the-use-of-pythonunbuffered-in-docker-file/59812588
 ENV PYTHONUNBUFFERED 1
 
-RUN mkdir /ec_site
-WORKDIR /ec_site
-COPY . /ec_site
+RUN mkdir /web
+WORKDIR /web
+COPY . /web
 # COPY ./server_run.sh /server_run.sh
 RUN pip install -r requirements.txt
-RUN chmod +x /ec_site/server_run.sh
-#ENTRYPOINT ["/web/server_run.sh"]
+RUN chmod +x /web/server_run.sh
+
+# ENTRYPOINT ["./server_run.sh"]
 #CMD ["~/server_run.sh"]
 # CMD ["python", "manage.py", "migrate"]
 #RUN python manage.py migrate

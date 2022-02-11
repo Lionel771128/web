@@ -5,7 +5,7 @@ from utils.log_in_out import process_reg, process_login, process_logout, validat
 from utils.product_utils import get_one_product, get_related_products
 from utils.utils import get_all_department, get_shoping_cart_info
 from .models import Brand, ProductCategory, Product
-
+from django.core.paginator import Paginator
 
 # Create your views here.
 def shop_grid_view(request, product_category):
@@ -21,6 +21,7 @@ def shop_grid_view(request, product_category):
         'user_id': None,
         'login': False
     }
+
 
     if validate_login_state(request):
         print(validate_login_state(request))
@@ -43,10 +44,15 @@ def shop_grid_view(request, product_category):
                                               category_id=int(product_category[1]),
                                               game_category=product_category[-1],
                                               is_active=True)
+
     elif request.method == 'POST':
         search_string = request.POST['search_string']
         products = Product.objects.filter(product_name__icontains=search_string)
         print(search_string)
+
+    # p_obj = Paginator(products, 3)
+    # page = p_obj.page(2)
+    # for p in page:
     for p in products:
         p_dict = {
             'product_id': p.product_id,
@@ -62,6 +68,7 @@ def shop_grid_view(request, product_category):
         }
 
         param['product_list'].append(p_dict)
+
     return render(request, 'shop-grid.html', param)
 
 
@@ -90,7 +97,7 @@ def shop_details_view(request, product_category):
         try:
             import json
             print(query_string_dict['pc'])
-            all_id = request.path.split('/')[2]
+            all_id = request.path.split('/')[3]
             print(all_id)
             param['product'] = get_one_product(query_string_dict['pc'])
             param['related_product_list'] = get_related_products(brand_id=all_id[0],
@@ -98,9 +105,10 @@ def shop_details_view(request, product_category):
                                                                  game_category_id=all_id[2])
             print(request.path)
 
+
         except:
             print('no data')
-
+        print('============', param['product'])
     return render(request, 'shop-details.html', param)
 
 
