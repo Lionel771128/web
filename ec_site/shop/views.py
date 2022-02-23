@@ -19,17 +19,20 @@ def shop_grid_view(request, product_category):
         'shopping_cart_item_count': 0,
         'shopping_cart_item_total': 0,
         'user_id': None,
-        'login': False
+        'login': False,
+        'current_page': 0,
+        'paginator': None,
+        'product_category': product_category
     }
 
-
     if validate_login_state(request):
-        print(validate_login_state(request))
-        print(request.session.get('user_id', None))
         param['login'] = True
         param['user_id'] = request.session.get('user_id', None)
+
+    page_number = 1
+    get_all_department(param)
     if request.method == 'GET':
-        get_all_department(param)
+        page_number = request.GET.get('p', 1)
         shoping_cart_info = get_shoping_cart_info(request)
         param['shopping_cart_item_count'] = shoping_cart_info['count']
         param['shopping_cart_item_total'] = shoping_cart_info['total']
@@ -50,10 +53,11 @@ def shop_grid_view(request, product_category):
         products = Product.objects.filter(product_name__icontains=search_string)
         print(search_string)
 
-    # p_obj = Paginator(products, 3)
-    # page = p_obj.page(2)
-    # for p in page:
-    for p in products:
+    p_obj = Paginator(products, 9)
+    current_page = p_obj.page(page_number)
+    param['current_page'] = current_page
+    param['paginator'] = p_obj
+    for p in current_page:
         p_dict = {
             'product_id': p.product_id,
             'brand_id': p.brand_id,
@@ -66,7 +70,6 @@ def shop_grid_view(request, product_category):
             'sell_price': p.sell_price,
             'img_path': p.image_path,
         }
-
         param['product_list'].append(p_dict)
 
     return render(request, 'shop-grid.html', param)
@@ -85,10 +88,9 @@ def shop_details_view(request, product_category):
         }
 
         if validate_login_state(request):
-            print(validate_login_state(request))
-            print(request.session.get('user_id', None))
             param['login'] = True
             param['user_id'] = request.session.get('user_id', None)
+
         get_all_department(param)
         query_string_dict = request.GET
         shoping_cart_info = get_shoping_cart_info(request)
@@ -96,19 +98,13 @@ def shop_details_view(request, product_category):
         param['shopping_cart_item_total'] = shoping_cart_info['total']
         try:
             import json
-            print(query_string_dict['pc'])
             all_id = request.path.split('/')[3]
-            print(all_id)
             param['product'] = get_one_product(query_string_dict['pc'])
             param['related_product_list'] = get_related_products(brand_id=all_id[0],
                                                                  category_id=all_id[1],
                                                                  game_category_id=all_id[2])
-            print(request.path)
-
-
         except:
             print('no data')
-        print('============', param['product'])
     return render(request, 'shop-details.html', param)
 
 
@@ -161,8 +157,6 @@ def shoping_cart_view(request):
     }
 
     if validate_login_state(request):
-        print(validate_login_state(request))
-        print(request.session.get('user_id', None))
         param['login'] = True
         param['user_id'] = request.session.get('user_id', None)
     else:
@@ -190,8 +184,8 @@ def update_shoping_cart_view(request):
 
         ec_cart = json.loads(request.body)['ec_cart']
         ec_cart_cookie = json.loads(request.COOKIES['ec_cart'])
-        print(ec_cart)
-        print(ec_cart_cookie)
+        # print(ec_cart)
+        # print(ec_cart_cookie)
         for p_id in list(ec_cart_cookie.keys()):
             if ec_cart.get(p_id, None) is not None:
                 ec_cart_cookie[p_id] = ec_cart[p_id]
@@ -218,8 +212,6 @@ def checkout_view(request):
     }
     get_all_department(param)
     if validate_login_state(request):
-        print(validate_login_state(request))
-        print(request.session.get('user_id', None))
         param['login'] = True
         param['user_id'] = request.session.get('user_id', None)
         shoping_cart_info = get_shoping_cart_info(request)

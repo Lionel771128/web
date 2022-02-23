@@ -40,7 +40,7 @@ class Product(models.Model):
     sell_price = models.DecimalField(max_digits=7, decimal_places=1)
     quantity = models.IntegerField(default=0)
     sales_volume = models.IntegerField(default=0)
-    image_path = models.ImageField(default='#path#')
+    image_path = models.ImageField(default='#path#',  max_length=200)
     is_active = models.BooleanField(default=True)
     create_time = models.DateTimeField(auto_now_add=True)
     last_modify_time = models.DateTimeField(auto_now=True)

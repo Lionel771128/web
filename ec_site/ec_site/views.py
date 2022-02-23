@@ -44,6 +44,7 @@ def reg_view(request):
 
 def index_view(request):
     # create_test_data()
+
     param = {
         'all_departments': [],
         'feature_product': [],
@@ -66,7 +67,6 @@ def index_view(request):
     # feature product
     # 從db抓出銷售量 > xxx 的商品， 每種brand至少2, 3個, 將image path整理好送入render
     products = Product.objects.all()
-    i = 0
     for product in products:
         p = {
             'product_id': product.product_id,
