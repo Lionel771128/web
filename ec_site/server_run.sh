@@ -1,9 +1,9 @@
 #!/bin/bash
 
 #chmod u+x /ec_site/manage.py
-python /web/ec_site/manage.py makemigrations
-python /web/ec_site/manage.py migrate
-#python /web/manage.py runserver 0.0.0.0:8000
+python /web/manage.py makemigrations
+python /web/manage.py migrate
+python /web/create_test_data.py --host /var/run/postgresql/
 uwsgi --ini /web/ec_site/uwsgi.ini
 
 while :

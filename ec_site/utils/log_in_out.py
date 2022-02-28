@@ -31,6 +31,8 @@ def process_login(request):
         # 密碼錯誤, 自動導回登入頁面
         else:
             resp = render(request, 'login/login.html')
+            print(user_obj[0]['password'])
+            print(password_sha)
             # 回彈錯誤視窗告訴用戶(待)
 
             print('########## 密碼錯誤, 自動導回登入頁面 ##########')

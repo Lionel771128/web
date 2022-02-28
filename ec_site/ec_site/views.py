@@ -85,11 +85,11 @@ def index_view(request):
 
 
 
-def create_test_data():
-    from create_test_data import create_cat_data, create_product_data, create_brand_data, create_game_cat_data, create_user_data
-    create_brand_data()
-    create_game_cat_data()
-    create_cat_data()
-    create_product_data()
-    create_user_data()
+# def create_test_data():
+#     from create_test_data import create_cat_data, create_product_data, create_brand_data, create_game_cat_data, create_user_data
+#     create_brand_data()
+#     create_game_cat_data()
+#     create_cat_data()
+#     create_product_data()
+#     create_user_data()
 

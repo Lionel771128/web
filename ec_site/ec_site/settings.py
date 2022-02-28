@@ -82,9 +82,9 @@ DATABASES = {
         'NAME': 'test',
         'USER': '123',
         'PASSWORD': '123',
-        'HOST': '127.0.0.1',
+        # 'HOST': '127.0.0.1',
         # 'HOST': 'db',
-        # 'HOST': '/var/run/postgresql/',
+        'HOST': '/var/run/postgresql/',
         'PORT': '5432',
     }
 }
