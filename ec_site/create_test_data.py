@@ -16,7 +16,7 @@ def create_test_data(db="test", user="123", password="123", host='127.0.0.1', po
 
 
 def copy_data_from_csv(db_conn, table_name=None):
-    assert db_conn is not None, 'table_name should not be Null'
+    assert db_conn is not None, 'db_conn should not be Null'
     assert table_name is not None, 'table_name should not be Null'
     # get column name
     cursor = db_conn.cursor()

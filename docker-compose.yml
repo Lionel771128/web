@@ -22,11 +22,7 @@ services:
 
   web:
     container_name: 'ec_site'
-    # command: uwsgi --ini /web/ec_site/uwsgi.ini
-    # command: python manage.py runserver
-    # command: ./server_run.sh
     entrypoint: ./server_run.sh
-    # entrypoint: /web/server_run.sh
     # build:說明此容器要使用特定 Dockerfile 來 build
     build:
       # context為檔案目錄
@@ -39,10 +35,10 @@ services:
     volumes:
       - api_data:/web
       - target:/var/run/postgresql/
-      - ./ec_site/ec_site/settings.py:/web/ec_site/settings.py
-      - ./ec_site/ec_site/uwsgi.ini:/web/ec_site/uwsgi.ini
-      - ./ec_site/ec_site/views.py:/web/ec_site/views.py
-      # - /Users/lionl771128/Documents/Django_test/ec_site/web:/web
+#      - ./ec_site/ec_site/settings.py:/web/ec_site/settings.py
+#      - ./ec_site/ec_site/uwsgi.ini:/web/ec_site/uwsgi.ini
+#      - ./ec_site/ec_site/views.py:/web/ec_site/views.py
+#      - /Users/lionl771128/Documents/Django_test/ec_site/web:/web
     depends_on:
       - db
     networks:
@@ -61,9 +57,9 @@ services:
     volumes:
       - api_data:/web
       - ./log:/var/log/nginx
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/mysite_nginx.conf:/etc/nginx/sites-enabled/mysite_nginx.conf
-      # - /Users/lionl771128/Documents/Django_test/ec_site/web:/web
+#      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+#      - ./nginx/mysite_nginx.conf:/etc/nginx/sites-enabled/mysite_nginx.conf
+#      - /Users/lionl771128/Documents/Django_test/ec_site/web:/web
     depends_on:
       - web
     networks:
