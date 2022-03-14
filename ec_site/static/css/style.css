@@ -405,6 +405,7 @@ ol {
 
 .header__top__right__auth a i {
 	margin-right: 6px;
+	margin-top: 30px;
 }
 
 .header__logo {
@@ -727,7 +728,7 @@ ol {
 }
 
 .hero__item {
-	height: 431px;
+	height: 340px;
 	display: flex;
 	align-items: center;
 	padding-left: 75px;
@@ -743,7 +744,7 @@ ol {
 
 .hero__text h2 {
 	font-size: 46px;
-	color: #252525;
+	color: #ffffff;
 	line-height: 52px;
 	font-weight: 700;
 	margin: 10px 0;

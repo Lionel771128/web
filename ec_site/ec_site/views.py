@@ -1,11 +1,8 @@
-from django.shortcuts import render, HttpResponseRedirect, HttpResponse, redirect
+from django.shortcuts import render, redirect
 from django.urls import reverse
-import os, sys
 from utils.log_in_out import process_reg, process_login, process_logout, validate_login_state
-from utils.product_utils import get_one_product, get_related_products
 from utils.utils import get_all_department, get_shoping_cart_info
 from shop.models import Brand, ProductCategory, Product
-import json
 
 
 def login_view(request):
@@ -22,6 +19,7 @@ def login_view(request):
 def logout_view(request):
     resp = process_logout(request)
     return resp
+
 
 def reg_view(request):
     # 進入註冊頁面
@@ -43,8 +41,6 @@ def reg_view(request):
 
 
 def index_view(request):
-    # create_test_data()
-
     param = {
         'all_departments': [],
         'feature_product': [],
@@ -83,13 +79,4 @@ def index_view(request):
         print(product.image_path)
     return render(request, 'index.html', param)
 
-
-
-# def create_test_data():
-#     from create_test_data import create_cat_data, create_product_data, create_brand_data, create_game_cat_data, create_user_data
-#     create_brand_data()
-#     create_game_cat_data()
-#     create_cat_data()
-#     create_product_data()
-#     create_user_data()
 
